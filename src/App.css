@@ -1,38 +1,68 @@
-.App {
-  text-align: center;
+body {
+  height: 100vh;
+  width: 100%;
+  background: #d8e0de;
+  background: -moz-linear-gradient(45deg, #d8e0de 0%, #aebfbc 10%, #99afab 24%, #8ea6a2 32%, #829d98 39%, #4e5c5a 68%, #4e5c5a 69%, #0e0e0e 91%, #0e0e0e 94%, #0e0e0e 94%);
+  background: -webkit-linear-gradient(45deg, #d8e0de 0%, #aebfbc 10%, #99afab 24%, #8ea6a2 32%, #829d98 39%, #4e5c5a 68%, #4e5c5a 69%, #0e0e0e 91%, #0e0e0e 94%, #0e0e0e 94%);
+  background: linear-gradient(45deg, #d8e0de 0%, #aebfbc 10%, #99afab 24%, #8ea6a2 32%, #829d98 39%, #4e5c5a 68%, #4e5c5a 69%, #0e0e0e 91%, #0e0e0e 94%, #0e0e0e 94%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#d8e0de', endColorstr='#0e0e0e', GradientType=1);
+
+  /* background-size: 400% 400%; */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
   }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  1000% {
+    background-position: 0% 50%;
+  }
+
+}
+#navbar {
+  height: 40px;
+  width: 100vw;
+  border-radius: 15px;
+  padding: 15px;
+  margin: 5px;
+  background: rgb(76,76,76);
+  background: -moz-linear-gradient(45deg,  rgba(76,76,76,1) 0%, rgba(89,89,89,1) 12%, rgba(102,102,102,1) 25%, rgba(71,71,71,1) 39%, rgba(44,44,44,1) 50%, rgba(0,0,0,1) 51%, rgba(17,17,17,1) 60%, rgba(43,43,43,1) 76%, rgba(28,28,28,1) 91%, rgba(19,19,19,1) 100%);
+  background: -webkit-linear-gradient(45deg,  rgba(76,76,76,1) 0%,rgba(89,89,89,1) 12%,rgba(102,102,102,1) 25%,rgba(71,71,71,1) 39%,rgba(44,44,44,1) 50%,rgba(0,0,0,1) 51%,rgba(17,17,17,1) 60%,rgba(43,43,43,1) 76%,rgba(28,28,28,1) 91%,rgba(19,19,19,1) 100%);
+  background: linear-gradient(45deg,  rgba(76,76,76,1) 0%,rgba(89,89,89,1) 12%,rgba(102,102,102,1) 25%,rgba(71,71,71,1) 39%,rgba(44,44,44,1) 50%,rgba(0,0,0,1) 51%,rgba(17,17,17,1) 60%,rgba(43,43,43,1) 76%,rgba(28,28,28,1) 91%,rgba(19,19,19,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4c4c4c', endColorstr='#131313',GradientType=1 );
+  
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.sec1 {
+  height: 50px;
+  width: 566px;
+  border-radius: 15px;
+  color: #0e0e0e;
+  /* padding: 20px; */
+  background: rgb(249,138,2);
+  background: -moz-linear-gradient(45deg,  rgba(249,138,2,1) 2%, rgba(249,138,2,1) 25%, rgba(255,255,255,1) 40%, rgba(255,255,255,1) 45%, rgba(255,255,255,1) 45%, rgba(255,255,255,1) 47%, rgba(255,255,255,1) 47%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 52%, rgba(255,255,255,1) 62%, rgba(58,224,74,1) 75%, rgba(58,224,74,1) 75%, rgba(58,224,74,1) 75%, rgba(58,224,74,1) 77%, rgba(58,224,74,1) 80%, rgba(58,224,74,1) 83%, rgba(58,224,74,1) 83%, rgba(16,204,16,1) 92%);
+  background: -webkit-linear-gradient(45deg,  rgba(249,138,2,1) 2%,rgba(249,138,2,1) 25%,rgba(255,255,255,1) 40%,rgba(255,255,255,1) 45%,rgba(255,255,255,1) 45%,rgba(255,255,255,1) 47%,rgba(255,255,255,1) 47%,rgba(255,255,255,1) 50%,rgba(255,255,255,1) 50%,rgba(255,255,255,1) 52%,rgba(255,255,255,1) 62%,rgba(58,224,74,1) 75%,rgba(58,224,74,1) 75%,rgba(58,224,74,1) 75%,rgba(58,224,74,1) 77%,rgba(58,224,74,1) 80%,rgba(58,224,74,1) 83%,rgba(58,224,74,1) 83%,rgba(16,204,16,1) 92%);
+  background: linear-gradient(45deg,  rgba(249,138,2,1) 2%,rgba(249,138,2,1) 25%,rgba(255,255,255,1) 40%,rgba(255,255,255,1) 45%,rgba(255,255,255,1) 45%,rgba(255,255,255,1) 47%,rgba(255,255,255,1) 47%,rgba(255,255,255,1) 50%,rgba(255,255,255,1) 50%,rgba(255,255,255,1) 52%,rgba(255,255,255,1) 62%,rgba(58,224,74,1) 75%,rgba(58,224,74,1) 75%,rgba(58,224,74,1) 75%,rgba(58,224,74,1) 77%,rgba(58,224,74,1) 80%,rgba(58,224,74,1) 83%,rgba(58,224,74,1) 83%,rgba(16,204,16,1) 92%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f98a02', endColorstr='#10cc10',GradientType=1 );
+}
+.sec3 {
+  font-size: x-large;
   color: white;
+  background-color: rgb(0, 0, 0);
+  height: 150px;
+  width: 350px;
+  border-radius: 30px;
+  padding: 10px;
+  padding-top: 20px;
+  margin-left: 250px;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.btn1{
+  margin-top: 10px;
+  border-radius: 8px;
 }

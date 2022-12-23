@@ -5,10 +5,13 @@ import detectEthereumProvider from '@metamask/detect-provider'
 import Invoice from './abis/Invoice.json'
 import Navbar from './components/Navbar'
 import Main from './components/Main'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Register from './components/Register'
+import Buy from './components/Buy'
 
 const App = () => {
   const [account, setAccount] = useState('0X0')
-  const [invoice, setInvoice] = useState(null)
+  const [invoice, setInvoice] = useState('mohit')
 
   /*****************************************/
   /* Detect the MetaMask Ethereum provider */
@@ -100,12 +103,12 @@ const App = () => {
     }
 
     // load Invoice contract
-    const web3 = window.web3
+    const web3 = await window.web3
     const networkID = await ethereum.request({ method: 'net_version' })
     const networkData = await Invoice.networks[networkID]
     const abi = Invoice.abi
-    const networkAddress = networkData.address
-    if (networkData) {
+    const networkAddress = await networkData.address
+    if (networkAddress) {
       const pseudoContract = new web3.eth.Contract(abi, networkAddress)
       setInvoice(pseudoContract)
       console.log(invoice)
@@ -113,37 +116,56 @@ const App = () => {
       window.alert('Smart contract not deployed')
     }
   }
+  // load Invoice contract
+  //     const networkID = await web3.eth.net.getId()
+  //     const networkData = await Invoice.networks[networkID]
 
+  //     if(networkData) {
+  //       const abi = Invoice.abi;
+  //       const address = networkData.address;
+  //       const contract = new web3.eth.Contract(abi, address)
+  //       this.setState({contract})
+  //       console.log({contract})
+  //     }
+  //     else {
+  //       window.alert("Smart contract not deployed")
+  //     }
   // function to register the product
   const registerProduct = (_title, _desc, _price) => {
-    this.state.contract.methods
+    invoice.methods
       .registerProduct(_title, _desc, _price)
-      .send({ from: this.state.account })
+      .send({ from: account })
+  }
+
+  // function to get the product Id's of the items bought by owner
+  const productIdOfItemsBoughtByBuyer = (_address) => {
+    invoice.methods
+      .getProductIdOfItemsBoughtByBuyer(_address)
+      .send({ from: account })
   }
 
   // function to buy the product
   const buy = (_productId) => {
-    this.state.contract.methods
-      .buy(_productId)
-      .send({ from: this.state.account })
+    invoice.methods.buy(_productId).send({ from: account })
   }
 
+  // function to get the no. of itmes bought by owner
   const noOfItemsBoughtBy = (_address) => {
-    this.state.contract.methods
-      .noOfItemsBoughtBy(_address)
-      .send({ from: this.state.account })
+    invoice.methods.noOfItemsBoughtBy(_address).send({ from: account })
   }
 
+  //function to get the details of the product bought by owner
   const getDetailsOfProductBoughtBy = (_address, _productId) => {
-    this.state.contract.methods
+    invoice.methods
       .getDetailsOfProductBoughtBy(_address, _productId)
-      .send({ from: this.state.account })
+      .send({ from: account })
   }
 
+  // function to check the payment status of any product bought by owner
   const checkPaymentStatus = (_address, _productId) => {
-    this.state.contract.methods
+    invoice.methods
       .checkPaymentStatus(_address, _productId)
-      .send({ from: this.state.account })
+      .send({ from: account })
   }
 
   //  COME BACK HERE LATER
@@ -172,8 +194,27 @@ const App = () => {
 
   return (
     <div>
-      <Navbar account={account} />
-      <Main />
+      <Router>
+        <Navbar account={account} />
+        <Routes>
+          <Route
+            exact
+            path="/"
+            element={
+              <Main
+                registerProduct={registerProduct}
+                buy={buy}
+                productIdOfItemsBoughtByBuyer={productIdOfItemsBoughtByBuyer}
+                noOfItemsBoughtBy={noOfItemsBoughtBy}
+                getDetailsOfProductBoughtBy={getDetailsOfProductBoughtBy}
+                checkPaymentStatus={checkPaymentStatus}
+              />
+            }
+          />
+          <Route exact path="/register" element={<Register />} />
+          <Route exact path="/buy" element={<Buy />} />
+        </Routes>
+      </Router>
     </div>
   )
 }
@@ -224,24 +265,24 @@ export default App
 
 //   // function to register the product
 //   registerProduct = (_title, _desc, _price) => {
-//     this.state.contract.methods.registerProduct(_title, _desc, _price).send({from: this.state.account})
+//     invoice.methods.registerProduct(_title, _desc, _price).send({from: account})
 //   }
 
 //   // function to buy the product
 //   buy = (_productId) => {
-//     this.state.contract.methods.buy(_productId).send({from: this.state.account})
+//     invoice.methods.buy(_productId).send({from: account})
 //   }
 
 //   noOfItemsBoughtBy = (_address) => {
-//     this.state.contract.methods.noOfItemsBoughtBy(_address).send({from: this.state.account})
+//     invoice.methods.noOfItemsBoughtBy(_address).send({from: account})
 //   }
 
 //   getDetailsOfProductBoughtBy = (_address, _productId) => {
-//     this.state.contract.methods.getDetailsOfProductBoughtBy(_address, _productId).send({from: this.state.account})
+//     invoice.methods.getDetailsOfProductBoughtBy(_address, _productId).send({from: account})
 //   }
 
 //   checkPaymentStatus = (_address, _productId) => {
-//     this.state.contract.methods.checkPaymentStatus(_address, _productId).send({from: this.state.account})
+//     invoice.methods.checkPaymentStatus(_address, _productId).send({from: account})
 //   }
 
 //   constructor(props) {
@@ -255,7 +296,7 @@ export default App
 //   render() {
 //     return (
 //       <div>
-//         <Navbar account = {this.state.account}/>
+//         <Navbar account = {account}/>
 //         <Main registerProduct={this.registerProduct} buy={this.buy} noOfItemsBoughtBy={this.noOfItemsBoughtBy} getDetailsOfProductBoughtBy={this.getDetailsOfProductBoughtBy} checkPaymentStatus={this.checkPaymentStatus} />
 //       </div>
 //     )

@@ -10,18 +10,18 @@ contract Invoice {
         uint productId;
         uint price;
         address buyerPAN;
-        bool registered;
-        bool bought;
+        bool registered; // registered means product registered by seller
+        bool bought;     // bought means product bought by buyer
     }
 
     uint counter = 1;
-    Product[] public products;
-    address[] public buyers;
+    Product[] private products;
+    address[] private buyers;
 
     mapping(address => bool) isBuyer;
     mapping(address => uint) noOfItemsBoughtByBuyer;
-    mapping(address => uint) itemsBoughtByBuyer;
-    mapping(address => mapping(uint => Product)) detailsOfProductBoughtByOwner;
+    mapping(address => uint[]) productIdOfItemsBoughtByBuyer;
+    mapping(address => mapping(uint => Product)) detailsOfProductBoughtByBuyer;
     mapping(address => mapping(uint => bool)) paymentStatus;
 
 
@@ -52,7 +52,8 @@ contract Invoice {
             isBuyer[msg.sender] == true;
         }
         noOfItemsBoughtByBuyer[msg.sender] += 1;
-        detailsOfProductBoughtByOwner[msg.sender][_productId] = products[_productId-1];
+        productIdOfItemsBoughtByBuyer[msg.sender].push(_productId);
+        detailsOfProductBoughtByBuyer[msg.sender][_productId] = products[_productId-1];
         require(products[_productId-1].buyerPAN == msg.sender, 'Only buyerPAN can confirm it');
         products[_productId-1].sellerPAN.transfer(products[_productId-1].price);
         paymentStatus[msg.sender][_productId] = true;
@@ -63,13 +64,16 @@ contract Invoice {
         return noOfItemsBoughtByBuyer[_address];
     }
 
+    function getProductIdOfItemsBoughtByBuyer(address _address) public view returns(uint[] memory) {
+        return productIdOfItemsBoughtByBuyer[_address];
+    }
+    
     function getDetailsOfProductBoughtBy(address _address, uint _productId) public view returns(Product memory){
-        return detailsOfProductBoughtByOwner[_address][_productId];
+        return detailsOfProductBoughtByBuyer[_address][_productId];
     }
 
     function checkPaymentStatus(address _address, uint _productId) public view returns(bool) {
-        bool status = paymentStatus[_address][_productId];
-        return status;
+        return paymentStatus[_address][_productId];
     }
     
 }
